@@ -15,8 +15,8 @@ import type { LegalDoc, LegalSection } from "./types";
  * Analytics: the wording follows components/analytics/config.ts. While NEXT_PUBLIC_GA_MEASUREMENT_ID is unset (as
  * now), the page says the site uses no cookies or analytics, which is true. Once it is set and the site rebuilt,
  * "Our website" changes, an "Analytics and cookies" section appears (anchor #privacy-analytics, linked from the
- * consent banner), and Google is added to the sharing, lawful basis and transfers text. Change "updated" to the
- * date analytics goes live when that happens (docs/seo-geo-aeo-handover-2026-11-22.md).
+ * consent banner), and Google is added to the sharing, lawful basis and transfers text. Analytics was switched on
+ * (GA4 property G-DTHTWQM125) on 23 Nov 2026, so "updated" shows that date while it's on.
  * If the form changes, or any embed is ever added, update "Our website" first.
  * Open points (hosting provider, payment provider, retention periods, ICO registration, the date) are in
  * docs/nick-confirmation-checklist.md. Not legal advice; Nick may want it checked before launch.
@@ -27,7 +27,7 @@ const ANALYTICS_SECTION: LegalSection = {
   id: "privacy-analytics",
   blocks: [
     "With your agreement, we use Google Analytics to understand how this website is used, such as which pages are visited and how many enquiries are sent, so we can improve it. Nothing is collected and no analytics cookies are set unless you choose “Accept analytics”.",
-    "If you accept, Google Analytics sets cookies (named _ga and _ga_ followed by a code) and records the pages you visit, the website that referred you, your browser and device type, and your approximate location, which Google works out from your IP address. It also records when the contact form sends a message, when a WhatsApp or email link is used, and when you continue from the size guide to the form. We don’t send Google your name, contact details, the player’s height or size, or anything you type into the form. Google signals and advertising features are turned off.",
+    "If you accept, Google Analytics sets cookies (named _ga and _ga_ followed by a code) and records the pages you visit, the website that referred you, your browser and device type, and your approximate location, which Google works out from your IP address. It also records when the contact form sends a message, when a WhatsApp or email link is used, and when you continue from the size guide to the form, and it may record general interactions such as how far down a page you scroll, when you start filling in the form (not what you type) and when you follow a link to another website. We don’t send Google your name, contact details, the player’s height or size, or anything you type into the form. Google signals and advertising features are turned off.",
     "Your choice is remembered in your browser’s storage, not in a cookie, so you aren’t asked on every page. You can change it at any time with “Cookie settings” at the bottom of each page. If you decline or withdraw, the analytics cookies are deleted and nothing further is sent.",
   ],
 };
@@ -35,7 +35,7 @@ const ANALYTICS_SECTION: LegalSection = {
 export const PRIVACY: LegalDoc = {
   title: "Privacy Policy",
   intro: "How Studio Violins looks after your personal information.",
-  updated: "22 November 2026",
+  updated: ANALYTICS_ENABLED ? "23 November 2026" : "22 November 2026",
   sections: [
     {
       heading: "Who we are",

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { ANALYTICS_ENABLED } from "@/components/analytics/config";
 import { GUIDES } from "@/components/guides/content";
 import { NEW_PRICES_LIVE } from "@/components/pricing/schedule";
 import { SITE_URL } from "@/components/site/business";
@@ -8,12 +9,14 @@ import { SITE_URL } from "@/components/site/business";
 const REVISED = "2026-11-22";
 const PRICE_REVISED = NEW_PRICES_LIVE ? "2027-01-01" : REVISED;
 const QUOTES_PRICE = new Set(["/", "/terms", "/starting-violin", "/for-teachers"]);
+// The privacy policy gained its analytics section when analytics was switched on.
+const PRIVACY_REVISED = ANALYTICS_ENABLED ? "2026-11-23" : REVISED;
 
 /** Every page on the site, for search engines (served at /sitemap.xml). */
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = ["/", ...GUIDES.map((g) => g.path), "/terms", "/privacy"];
   return paths.map((path) => ({
     url: new URL(path, SITE_URL).toString(),
-    lastModified: QUOTES_PRICE.has(path) ? PRICE_REVISED : REVISED,
+    lastModified: path === "/privacy" ? PRIVACY_REVISED : QUOTES_PRICE.has(path) ? PRICE_REVISED : REVISED,
   }));
 }

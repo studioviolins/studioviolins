@@ -16,6 +16,13 @@ import { ANALYTICS_ENABLED, GA_MEASUREMENT_ID } from "./config";
  * Only fixed, non-personal values are sent: never form contents, names, email addresses, phone numbers, the
  * player's height or size, message text, raw link URLs or error messages. Page addresses are sent without their
  * query string (except utm_ campaign tags) or #fragment.
+ *
+ * The GA4 property's own Google tag (G-DTHTWQM125, checked 23 Nov 2026 with Google's collection blocked) also
+ * runs "enhanced measurement" (scrolls, form starts, outbound clicks, site search, history page views) and
+ * ignores send_page_view in a later config call. So the settings below go in with gtag("set") BEFORE
+ * gtag("js"), which stops its automatic page_view and makes its automatic events use the cleaned address. Its
+ * site-search and form events read the browser's address directly, so once analytics is accepted the address
+ * bar keeps only utm_ tags (and the #section) before the tag loads.
  */
 type EventName = "page_view" | "generate_lead" | "contact_click" | "size_guide_continue";
 type EventParams = Record<string, string>;
@@ -57,26 +64,43 @@ function safeReferrer(): string {
   }
 }
 
+/** Drops query values other than utm_ tags from the address bar, keeping the #section, so nothing the tag reads
+ *  from the address itself (site search terms, form addresses) can carry them. Only used once analytics is accepted. */
+function cleanAddressBar() {
+  const { pathname, search, hash } = window.location;
+  if (!search) return;
+  const clean = new URL(safePageLocation()).search;
+  if (clean === search) return;
+  try {
+    window.history.replaceState(window.history.state, "", `${pathname}${clean}${hash}`);
+  } catch {
+    // leave the address as it is; the events still send the cleaned address
+  }
+}
+
 /** Called once the visitor accepts: loads gtag.js. Google signals and ad personalisation stay off. */
 export function enableAnalytics() {
   if (!ANALYTICS_ENABLED) return;
   setDisabled(false);
   if (loaded) return;
   loaded = true;
+  cleanAddressBar();
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = function gtag() {
     // gtag.js expects the arguments object itself
     window.dataLayer!.push(arguments);
   };
-  window.gtag("js", new Date());
-  window.gtag("config", GA_MEASUREMENT_ID, {
+  const settings = {
     send_page_view: false, // page_view is sent by Analytics.tsx, once per page
     page_location: safePageLocation(),
     page_referrer: safeReferrer(),
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
-  });
+  };
+  window.gtag("set", settings); // must come before "js" (see the note at the top)
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID, settings);
 
   const script = document.createElement("script");
   script.async = true;
@@ -107,6 +131,9 @@ export function track(name: EventName, params: EventParams = {}) {
 }
 
 export function trackPageView() {
+  if (!ANALYTICS_ENABLED || !loaded || getConsent() !== "granted" || !window.gtag) return;
+  cleanAddressBar();
+  window.gtag("set", { page_location: safePageLocation(), page_title: document.title });
   track("page_view", { page_title: document.title });
 }
 
