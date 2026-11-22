@@ -34,6 +34,9 @@ export const CONTACT_COPY = {
       change: "Change",
       /** Read by screen readers after "Change"; not shown. */
       changeHint: " the player’s height on the slider",
+      remove: "Remove",
+      /** Read by screen readers after "Remove"; not shown. */
+      removeHint: " the player’s height and size from your message",
     },
     submit: "Send message to Nick",
     sending: "Sending…",

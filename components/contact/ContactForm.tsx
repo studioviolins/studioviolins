@@ -28,8 +28,9 @@ const FIELD_ORDER: ContactField[] = ["name", "email", "phone", "message"];
  *
  * A height chosen on the rental section's slider shows as a short summary above the fields and goes with the
  * message in its own hidden field, never inside the message itself. It follows the slider as it moves ("Change"
- * goes back to it). It is cleared when the visitor follows "contact Nick directly" under the slider, and absent
- * when nothing was chosen, so the form works the same without it.
+ * goes back to it). It is cleared when the visitor chooses "Remove" (moving the slider again adds it back) or
+ * follows "contact Nick directly" under the slider, and absent when nothing was chosen, so the form works the
+ * same without it.
  */
 export default function ContactForm() {
   const [state, formAction, pending] = useActionState(sendContactMessage, INITIAL_CONTACT_STATE);
@@ -125,6 +126,18 @@ export default function ContactForm() {
               {PICK.change}
               <span className={styles.srOnly}>{PICK.changeHint}</span>
             </a>
+            <button
+              type="button"
+              className={styles.selectionAction}
+              onClick={() => {
+                setSelectedHeight(null);
+                // the summary (and this button) disappears, so move focus on to the first field
+                nameRef.current?.focus({ preventScroll: true });
+              }}
+            >
+              {PICK.remove}
+              <span className={styles.srOnly}>{PICK.removeHint}</span>
+            </button>
           </p>
           <input type="hidden" name={HEIGHT_FIELD} value={sizing.heightCm} />
         </div>

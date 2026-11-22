@@ -6,7 +6,7 @@ import { isSliderHeight } from "./height-sizes";
 /**
  * The height the visitor has actively chosen on the slider, shared by the slider and the contact form on the
  * same page. Null until they move, tap or use the keys on the slider (an untouched default is never attached),
- * and again after they follow "contact Nick directly" or send their message. Held in memory for this page view only:
+ * and again after they remove it from the form, follow "contact Nick directly" or send their message. Held in memory for this page view only:
  * nothing goes into cookies or browser storage (the privacy policy says the site uses neither), and nothing is
  * stored on the server.
  */
