@@ -1,0 +1,61 @@
+# Deploys the site to Vercel production on every push to main, on demand, and on 1 January.
+#
+# Pages are prerendered when the site is built, and the rental prices change on 1 January 2027
+# (components/pricing/schedule.ts), so the site must be rebuilt on or after that date. The two scheduled runs
+# (00:17 and 06:17 UTC; the second is a back-up in case the first is delayed) do that. They repeat every
+# 1 January, which only rebuilds the site.
+#
+# Needs: the repository secret VERCEL_TOKEN, and the repository variables VERCEL_ORG_ID and VERCEL_PROJECT_ID.
+# Without the token the run skips the deploy and says so.
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 0 1 1 *"
+    - cron: "17 6 1 1 *"
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Skip when the Vercel token isn't set
+        if: env.VERCEL_TOKEN == ''
+        run: echo "::notice::VERCEL_TOKEN isn't set, so nothing was deployed."
+
+      - uses: actions/checkout@v4
+        if: env.VERCEL_TOKEN != ''
+
+      - uses: actions/setup-node@v4
+        if: env.VERCEL_TOKEN != ''
+        with:
+          node-version: 26
+
+      - name: Install the Vercel CLI
+        if: env.VERCEL_TOKEN != ''
+        run: npm install --global vercel@65.12.1
+
+      - name: Pull production settings
+        if: env.VERCEL_TOKEN != ''
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build
+        if: env.VERCEL_TOKEN != ''
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy
+        if: env.VERCEL_TOKEN != ''
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
