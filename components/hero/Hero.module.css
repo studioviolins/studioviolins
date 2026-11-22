@@ -1,0 +1,603 @@
+/* Studio Violins — hero, modern classical
+   A still portrait of Nick that dissolves into him playing when a visitor
+   lingers on it or presses "Watch Nick play". Type never moves.
+   Layers (back → front): photograph, film, fixed fade, copy + caption + control. */
+
+.hero {
+  --green: #102922;
+  --ivory: #f3ecdd;
+  --ivory-soft: #ddd8cc;
+  --muted: #c4c0b4;
+  --gold: #ddb56e;
+  --gold-hover: #e6c385;
+  --ink: #132a22;
+  --gutter: clamp(20px, 6vw, 96px);
+  --serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --sans: var(--font-sans), system-ui, sans-serif;
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+  /* Warm-neutral shadow and brand-green tint (shared by photograph and film). */
+  --shade: 11 10 8;
+  --tint: 16 41 34;
+
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(640px, 100svh, 1200px);
+  background: var(--green);
+  color: var(--ivory);
+  font-family: var(--sans);
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero :where(a, button):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The header and navigation now live in components/site-header, shared with the other pages. */
+
+/* ------------------------------------------------------------------ */
+/* Photograph and film                                                  */
+/* ------------------------------------------------------------------ */
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* The scene is framed in from the left on wide layouts and melts into the
+   background there instead of showing an edge. */
+.scene {
+  --scene-left: 24%;
+  /* Where the photograph is anchored when it's cropped (as object-position). */
+  --fx: 0.5;
+  --fy: 0.24;
+
+  position: absolute;
+  inset: 0;
+  left: var(--scene-left);
+  overflow: hidden;
+  container-type: size;
+  mask-image: linear-gradient(90deg, transparent 0, #000 16%);
+}
+
+/* The photograph's own box, sized to cover the scene (object-fit: cover done by
+   hand), so the film can be placed in the photograph's coordinates. */
+.stage {
+  --photo-ratio: 0.90625; /* 3480 × 3840 */
+  --stage-w: max(100cqw, 100cqh * var(--photo-ratio));
+
+  position: absolute;
+  width: var(--stage-w);
+  aspect-ratio: 3480 / 3840;
+  left: calc((100cqw - var(--stage-w)) * var(--fx));
+  top: calc((100cqh - var(--stage-w) / var(--photo-ratio)) * var(--fy));
+}
+
+.photo {
+  object-fit: cover;
+  transition: opacity 0.35s ease;
+}
+
+/* The film, lined up on Nick: the bridge of his glasses sits on the same point
+   as in the photograph (42.2% 31.7% of the photo; 42.9% 43.3% of the film,
+   his median position through the loop). Matching his size exactly would mean
+   enlarging the footage ~4×, so it stops at 2× its own pixels — on phones that
+   is a true match; on wider screens he appears about half the photograph's size. */
+.film {
+  position: absolute;
+  left: 42.2%;
+  top: 31.7%;
+  width: min(260%, 1376px);
+  aspect-ratio: 688 / 640;
+  translate: -42.9% -43.3%;
+  opacity: 0;
+  /* Feathered on every side, so where the film doesn't reach the edge of the
+     scene it settles into the page green rather than showing a rectangle. */
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 7%, #000 86%, transparent),
+    linear-gradient(transparent, #000 6%, #000 90%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 7%, #000 86%, transparent),
+    linear-gradient(transparent, #000 6%, #000 90%, transparent);
+  mask-composite: intersect;
+  /* Dissolving back: the photograph is already returning underneath. */
+  transition: opacity 1.4s cubic-bezier(0.45, 0, 0.25, 1) 0.15s;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The audible performance sits over the muted preview in the same frame and
+   cross-fades in when "Watch & listen" is pressed. */
+.performance {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.media[data-layer="performance"] .performance {
+  opacity: 1;
+}
+
+/* Gentle shading of the brightest parts of the hall, in the film's own
+   coordinates, so the flowers, white wall, music stand and gilded lectern sit
+   back like the dark surroundings of the photograph. Nick is left untouched. */
+.grade {
+  position: absolute;
+  inset: 0;
+  background:
+    /* flowers above and behind him */
+    radial-gradient(ellipse 20% 22% at 64% 10%, rgb(var(--shade) / 0.55), rgb(var(--shade) / 0.25) 60%, transparent),
+    /* gilded lectern */
+    radial-gradient(ellipse 14% 30% at 21% 22%, rgb(var(--shade) / 0.4), transparent),
+    /* music stand */
+    radial-gradient(ellipse 20% 17% at 74% 72%, rgb(var(--shade) / 0.5), rgb(var(--shade) / 0.2) 60%, transparent),
+    /* soft falloff around Nick, his face, violin and bow untouched */
+    radial-gradient(ellipse 30% 40% at 44% 54%, transparent 55%, rgb(var(--shade) / 0.38) 80%, rgb(var(--shade) / 0.66) 100%),
+    /* white wall to his left */
+    linear-gradient(90deg, transparent 64%, rgb(var(--shade) / 0.38) 84%, rgb(var(--shade) / 0.5));
+  pointer-events: none;
+}
+
+/* Dissolve: the film comes up over the photograph, then the photograph steps
+   away underneath, so the scene never dips to blank green. */
+.media[data-film] .film {
+  opacity: 1;
+  transition: opacity 1.4s cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.media[data-film] .photo {
+  opacity: 0;
+  transition: opacity 0.6s ease 1.2s;
+}
+
+
+/* Fixed above both photographs and below the text (brief: stronger left fade).
+   The darkening is a warm-neutral shadow so skin tones stay natural; the brand
+   green is a separate tint that lives only behind the copy and is gone before
+   it reaches Nick. */
+.fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* soft corner shadow so Nick's caption stays legible on bright photographs */
+    radial-gradient(
+      ellipse 38% 40% at 100% 100%,
+      rgb(var(--shade) / 0.6),
+      rgb(var(--shade) / 0.25) 55%,
+      transparent 80%
+    ),
+    linear-gradient(
+      90deg,
+      rgb(var(--tint) / 0.6) 0%,
+      rgb(var(--tint) / 0.42) 24%,
+      rgb(var(--tint) / 0.12) 36%,
+      rgb(var(--tint) / 0) 44%
+    ),
+    linear-gradient(
+      90deg,
+      rgb(var(--shade) / 0.95) 0%,
+      rgb(var(--shade) / 0.9) 22%,
+      rgb(var(--shade) / 0.8) 36%,
+      rgb(var(--shade) / 0.6) 45%,
+      rgb(var(--shade) / 0.26) 56%,
+      rgb(var(--shade) / 0.06) 68%,
+      rgb(var(--shade) / 0) 80%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(var(--shade) / 0.85) 0%,
+      rgb(var(--shade) / 0.28) 22%,
+      transparent 50%,
+      rgb(var(--shade) / 0.28) 100%
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Copy                                                                */
+/* ------------------------------------------------------------------ */
+
+.copy {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: calc(var(--gutter) + 680px);
+  padding: 132px 0 128px var(--gutter);
+}
+
+/* Contemporary serif, upright, all ivory. Optical size held at a text-like
+   setting so strokes stay sturdy over photography. */
+.title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 460;
+  font-size: clamp(42px, 4.7vw, 70px);
+  font-variation-settings: "opsz" 36;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  color: var(--ivory);
+  text-wrap: balance;
+}
+
+.title span {
+  display: block;
+}
+
+.intro {
+  max-width: 410px;
+  margin: 30px 0 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ivory-soft);
+}
+
+/* Secondary location line: small, muted ivory, no icon. */
+.location {
+  max-width: 410px;
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding: 16px 22px 16px 24px;
+  border-radius: 3px;
+  background: var(--gold);
+  color: var(--ink);
+  font: 500 15px/1 var(--sans);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: var(--gold-hover);
+}
+
+.cta svg {
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+
+.cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Caption (Nick) + "Watch Nick play"                                   */
+/* ------------------------------------------------------------------ */
+
+.footer {
+  position: absolute;
+  z-index: 4;
+  right: var(--gutter);
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 22px;
+}
+
+.caption {
+  text-align: right;
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.45);
+}
+
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 450;
+  font-variation-settings: "opsz" 24;
+  letter-spacing: -0.005em;
+  color: var(--ivory);
+}
+
+.role {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  color: var(--ivory-soft);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+/* "Watch Nick play": a quiet text button with a round icon. */
+.watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ivory-soft);
+  font: 500 13px/1 var(--sans);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.45);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.watch:hover {
+  color: var(--ivory);
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgb(243 236 221 / 0.3);
+  border-radius: 50%;
+  color: var(--ivory);
+  transition: border-color 0.3s;
+}
+
+.watch:hover .play {
+  border-color: rgb(243 236 221 / 0.7);
+}
+
+/* During a performance: pause/play, mute/unmute, stop. */
+.playback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.round {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgb(243 236 221 / 0.34);
+  border-radius: 50%;
+  background: rgb(11 10 8 / 0.28);
+  color: var(--ivory);
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.round:hover {
+  border-color: rgb(243 236 221 / 0.75);
+  background: rgb(11 10 8 / 0.45);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tablet                                                              */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 1024px) and (min-width: 721px) {
+  .fade {
+    background:
+      radial-gradient(
+        ellipse 50% 36% at 100% 100%,
+        rgb(var(--shade) / 0.6),
+        rgb(var(--shade) / 0.25) 55%,
+        transparent 80%
+      ),
+      linear-gradient(
+        90deg,
+        rgb(var(--tint) / 0.6) 0%,
+        rgb(var(--tint) / 0.42) 30%,
+        rgb(var(--tint) / 0.12) 44%,
+        rgb(var(--tint) / 0) 52%
+      ),
+      linear-gradient(
+        90deg,
+        rgb(var(--shade) / 0.95) 0%,
+        rgb(var(--shade) / 0.9) 28%,
+        rgb(var(--shade) / 0.8) 44%,
+        rgb(var(--shade) / 0.6) 53%,
+        rgb(var(--shade) / 0.26) 65%,
+        rgb(var(--shade) / 0.06) 78%,
+        rgb(var(--shade) / 0) 88%
+      ),
+      linear-gradient(
+        0deg,
+        rgb(var(--shade) / 0.85) 0%,
+        rgb(var(--shade) / 0.28) 22%,
+        transparent 50%,
+        rgb(var(--shade) / 0.28) 100%
+      );
+  }
+
+  .copy {
+    max-width: calc(var(--gutter) + 500px);
+  }
+
+  .title {
+    font-size: clamp(38px, 5.4vw, 52px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Phone: Nick first, message beneath on the page green                */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 720px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .media {
+    position: relative;
+    inset: auto;
+    height: clamp(380px, 52svh, 540px);
+  }
+
+  .scene {
+    --scene-left: 0px;
+    --fx: 0.56;
+    --fy: 0.12;
+    /* Settle into the page green at the foot of the image, so the footage can
+       never show a sliver below the fade (video layers round their own size). */
+    mask-image: linear-gradient(#000 80%, transparent calc(100% - 2px));
+  }
+
+  /* Neutral shadow, ending in the page green under the caption. */
+  .fade {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--shade) / 0.45) 0%,
+      rgb(var(--shade) / 0) 16%,
+      rgb(var(--shade) / 0) 44%,
+      rgb(var(--shade) / 0.45) 64%,
+      rgb(16 41 34 / 0.92) 84%,
+      #102922 100%
+    );
+  }
+
+  /* Caption takes the full width; controls sit level with Nick's name. */
+  .footer {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 4px;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .caption {
+    text-align: left;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .role {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .controls {
+    position: absolute;
+    top: -6px;
+    right: 0;
+    margin: 0;
+  }
+
+  .watch {
+    gap: 10px;
+    font-size: 12.5px;
+  }
+
+  .play {
+    width: 36px;
+    height: 36px;
+  }
+
+  .playback {
+    gap: 8px;
+  }
+
+  .round {
+    width: 40px;
+    height: 40px;
+  }
+
+  .copy {
+    flex: none;
+    justify-content: flex-start;
+    max-width: none;
+    padding: 26px var(--gutter) 36px;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    margin-top: 14px;
+  }
+
+  .title {
+    font-size: min(40px, 9.3vw);
+  }
+
+  .intro {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .location {
+    margin-top: 10px;
+    font-size: 13.5px;
+  }
+
+  .cta {
+    margin-top: 24px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion: no hover playback (handled in Hero.tsx); if a visitor  */
+/* chooses to watch, a short plain crossfade instead of the slow dissolve. */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .film,
+  .media[data-film] .film {
+    transition: opacity 0.2s linear;
+  }
+
+  .media[data-film] .photo {
+    transition: opacity 0.2s linear 0.2s;
+  }
+
+  .performance {
+    transition: opacity 0.2s linear;
+  }
+
+  .photo,
+  .watch,
+  .play,
+  .round,
+  .cta svg {
+    transition: none;
+  }
+}

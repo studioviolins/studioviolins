@@ -1,0 +1,281 @@
+/* Site header.
+   top    — home page, over the hero: transparent with the hero's soft shade and hairline (unchanged look).
+   bar    — home page, once the hero has scrolled away: a compact, solid deep-green bar fixed to the top.
+   static — terms and privacy: the same compact bar, sticky from the start.
+   At 820px and below the links fold into a Menu button. */
+
+.header {
+  --green: #102922;
+  --ivory: #f3ecdd;
+  --ivory-soft: #ddd8cc;
+  --gold: #ddb56e;
+  --ink: #132a22;
+  --line: rgb(244 239 228 / 0.12);
+  --gutter: clamp(20px, 6vw, 96px);
+  --serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --sans: var(--font-sans), system-ui, sans-serif;
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px var(--gutter);
+  color: var(--ivory);
+  font-family: var(--sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header[data-mode="top"] {
+  position: absolute;
+  inset: 0 0 auto;
+  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+  background: linear-gradient(rgb(11 10 8 / 0.35), transparent);
+}
+
+.header[data-mode="bar"],
+.header[data-mode="static"] {
+  padding-block: 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--green);
+}
+
+.header[data-mode="bar"] {
+  position: fixed;
+  inset: 0 0 auto;
+  box-shadow: 0 10px 24px -20px rgb(0 0 0 / 0.6);
+}
+
+.header[data-mode="static"] {
+  position: sticky;
+  top: 0;
+}
+
+/* The bar settles in quietly rather than snapping; not at all if motion is reduced. */
+@media (prefers-reduced-motion: no-preference) {
+  .header[data-mode="bar"] {
+    animation: settle 0.28s var(--ease);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* An open menu over the hero needs a solid ground behind it. */
+.header[data-open] {
+  background: var(--green);
+}
+
+.header :where(a, button):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+
+.logo {
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.header:not([data-mode="top"]) .logo {
+  font-size: 23px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+
+.link {
+  display: block;
+  padding: 10px 0;
+  color: var(--ivory-soft);
+  text-decoration: none;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  transition: color 0.3s;
+}
+
+.link:hover,
+.link[aria-current] {
+  color: var(--ivory);
+  text-decoration-line: underline;
+  text-decoration-color: var(--gold);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: -6px; /* the button's border reads as part of the gap */
+  padding: 9px 14px 9px 16px;
+  border: 1px solid rgb(221 181 110 / 0.75);
+  border-radius: 3px;
+  color: var(--ivory);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.cta:hover {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.cta[aria-current]:not(:hover) {
+  border-color: var(--gold);
+  background: rgb(221 181 110 / 0.14);
+}
+
+.cta svg,
+.panelCta svg {
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+
+.cta:hover svg,
+.panelCta:hover svg {
+  transform: translateX(3px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu (phones and narrow tablets)                                     */
+/* ------------------------------------------------------------------ */
+
+.menuButton {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 16px 0 14px;
+  border: 1px solid rgb(243 236 221 / 0.38);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--ivory);
+  font: 500 14px/1 var(--sans);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.menuButton[aria-expanded="true"] {
+  border-color: var(--gold);
+}
+
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - 72px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px var(--gutter) 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--green);
+  box-shadow: 0 24px 32px -24px rgb(0 0 0 / 0.7);
+}
+
+.panelLinks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panelLinks li + li {
+  border-top: 1px solid var(--line);
+}
+
+.panelLink {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 4px 0;
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 450;
+  text-decoration: none;
+}
+
+.panelLink[aria-current] {
+  color: var(--gold);
+}
+
+.panelLink[aria-current]::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-left: 12px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.panelCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: var(--gold);
+  color: var(--ink);
+  font: 500 16px/1 var(--sans);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.panel :where(a):focus-visible {
+  outline-offset: 2px;
+}
+
+@media (max-width: 820px) {
+  .links {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .header {
+    padding: 14px var(--gutter);
+  }
+
+  .header:not([data-mode="top"]) {
+    padding-block: 8px;
+  }
+
+  .logo,
+  .header:not([data-mode="top"]) .logo {
+    font-size: 22px;
+  }
+
+  .panel {
+    max-height: calc(100dvh - 60px);
+  }
+}

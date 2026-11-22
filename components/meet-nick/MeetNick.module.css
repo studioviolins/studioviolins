@@ -1,0 +1,115 @@
+/* Meet Nick — warm cream after the deep green pricing band, deep green type. The photograph keeps the
+   violin stage's softly curved corners. No cards, no animation. */
+
+.section {
+  --cream: #f4efe4;
+  --green: #102922;
+  --ink: #15352b;
+  --muted: #5b6d63;
+  --radius: clamp(18px, 2.2vw, 28px);
+  --gutter: clamp(20px, 6vw, 96px);
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+  --serif: var(--font-serif), Georgia, serif;
+
+  padding: 44px var(--gutter);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.section :where(a):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* Phones: photograph, then copy. Wide screens: photograph left, copy right, centred on each other. */
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (min-width: 861px) {
+  .inner {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); /* photo a little narrower, to sit with the short copy */
+    align-items: center;
+    column-gap: clamp(40px, 5vw, 88px);
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-block: 30px;
+  }
+}
+
+/* The photograph is 3:2 with Nick on the right. A 5:4 frame anchored to the right edge keeps his face,
+   the violin and his seated posture, and trims only empty street on the left. */
+.photo {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #e8e2d6;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 100% 50%;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 34rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 520;
+  font-variation-settings: "opsz" 40;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--green);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 12px 0 0;
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.6;
+}
+
+.title + .body {
+  margin-top: 14px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 24px;
+  padding: 19px 26px 19px 28px;
+  border-radius: 3px;
+  background: var(--green);
+  color: var(--cream);
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: #1b3d33;
+}
+
+.cta svg {
+  flex: none;
+}

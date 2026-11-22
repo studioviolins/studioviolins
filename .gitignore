@@ -1,0 +1,35 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Environment files and credentials (the safe template is kept)
+.env*
+!.env.example
+.vercel/
+*.pem
+*.key
+*.p12
+credentials*.json
+
+# Local tooling, logs and OS files
+.claude/
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+__pycache__/
+*.pyc
+
+# Internal planning notes (kept locally); README screenshots are published
+docs/*
+!docs/screenshots/
+
+# Working files, temporary files and downloaded reference material. The site doesn't use them: the finished,
+# approved assets it needs are in assets/ and public/.
+output/
+tmp/
+
+# 3D model generator: it reads reference data kept in output/. The finished model is in public/violin-3d/.
+blender/

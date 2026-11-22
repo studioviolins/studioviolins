@@ -1,0 +1,96 @@
+{
+  "size": "4/4",
+  "units": "m",
+  "bodyLengthMm": 356,
+  "overallLengthMm": 590,
+  "modelBodyLengthMm": 356.0,
+  "modelOverallLengthMm": 589.93,
+  "anchorsMm": {
+    "Anchor_BodyBottom": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Anchor_BodyTop": [
+      0.0,
+      0.0,
+      356
+    ],
+    "Anchor_ScrollTop": [
+      0.0,
+      23.67,
+      589.93
+    ],
+    "Anchor_Bridge": [
+      0.0,
+      -61.52,
+      161.0
+    ]
+  },
+  "stringLengthsMm": [
+    330.0,
+    330.2,
+    330.1,
+    329.7
+  ],
+  "sizeWarp": null,
+  "triangles": 246770,
+  "approximations": [
+    {
+      "item": "Body outline curve",
+      "note": "Drawn to the Beley widths (164 / 114 / 204 mm, DERIVED) at the 356 mm body length; the curve between them, corners and C-bout shape matched by eye to the Primavera 150 product photos."
+    },
+    {
+      "item": "Plate arching",
+      "note": "Top 15.5 mm, back 14.6 mm above the ribs; long and cross arches generated from a membrane solve. Not published."
+    },
+    {
+      "item": "Rib height",
+      "note": "31 mm, constant. JSON value is null."
+    },
+    {
+      "item": "Total body depth",
+      "note": "Follows from the arching and rib height above (about 61 mm). JSON value is null."
+    },
+    {
+      "item": "Edge, purfling, overhang",
+      "note": "3.8 mm edge, purfling about 4 mm in, 2.6 mm overhang."
+    },
+    {
+      "item": "f-holes",
+      "note": "Outline traced from Primavera 150 product photo 02 (visual reference) and scaled to the 356 mm body; across-body position (upper eyes about 47 mm apart) estimated from the photo. Bridge line 195 mm from the top edge."
+    },
+    {
+      "item": "Neck and fingerboard set",
+      "note": "27 mm projection, 6.5 mm overstand, 24 mm nut, 42 mm fingerboard end, 42 mm radius."
+    },
+    {
+      "item": "Neck length",
+      "note": "Results from the 330 mm string length and the bridge position (about 132 mm). JSON value is null."
+    },
+    {
+      "item": "Pegbox and scroll",
+      "note": "Carved as one continuous coil: the pegbox back runs on into the outer turn of the scroll and the cheeks' front edges run through the throat into the spiral step. Side profile, spiral and back widths follow a generic luthier's template (makingtheviolin.com, after Vojt\u011bch Blahout), used for proportions only and scaled by 0.99 so the scroll top meets the 590 mm overall length; chin shape designed. About 41 mm across the eyes; eye boss size, step depth and hollowed turns matched by eye to Primavera 150 photo 05. Not a measurement of a Primavera head."
+    },
+    {
+      "item": "Pegs",
+      "note": "Peg-hole positions from the same template, with the E and D pegs set about 1.5 mm further back so the strings clear the neighbouring shafts. Head, collar and shaft shapes matched by eye to the Primavera 150 photos."
+    },
+    {
+      "item": "Bridge",
+      "note": "Heights set so the strings clear the fingerboard end by about 5.5 mm (G) and 3.6 mm (E)."
+    },
+    {
+      "item": "Strings",
+      "note": "Drawn slightly thicker than real gauges so they stay visible on screen."
+    },
+    {
+      "item": "Tailpiece",
+      "note": "Composite with four built-in adjusters, after the Primavera 150 description; the 114 mm length is the W.H. Lee reference."
+    },
+    {
+      "item": "Chinrest",
+      "note": "Side-mounted cup in the style of the Teka model named in the Primavera 150 specification; shape modelled by eye."
+    }
+  ]
+}

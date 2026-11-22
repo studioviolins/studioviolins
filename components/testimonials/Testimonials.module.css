@@ -1,0 +1,127 @@
+/* Testimonials — warm ivory, between the stone credentials strip and the cream rental section;
+   the colour change is the boundary, so there is no hairline. The carousel is the feature;
+   everything else stays quiet. */
+
+.section {
+  --cream: #faf8f2; /* warm ivory; the carousel arrows use it too */
+  --ink: #15352b;
+  --muted: #5b6d63;
+  --gold: #c29a55;
+  --gutter: clamp(20px, 6vw, 96px);
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+  --stage-width: min(1240px, 100vw);
+
+  overflow-x: clip;
+  padding: 40px var(--gutter);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.section :where(a):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.head {
+  max-width: 1120px;
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 460;
+  font-variation-settings: "opsz" 36;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 6px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+/* The carousel breaks out of the page gutters (up to 1240px) so the
+   neighbouring previews have room either side of the centre review. */
+.stage {
+  width: var(--stage-width);
+  margin-inline: calc((100% - var(--stage-width)) / 2);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 28px;
+  margin-top: 14px;
+}
+
+.rating {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.rating strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0 5px;
+  border-bottom: 1px solid rgb(194 154 85 / 0.6);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.3s;
+}
+
+.link:hover {
+  border-color: var(--ink);
+}
+
+.link svg {
+  transition: transform 0.5s var(--ease);
+}
+
+.link:hover svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-block: 30px;
+  }
+
+  .head {
+    margin-bottom: 18px;
+  }
+
+  .lede {
+    font-size: 16px;
+  }
+
+  .meta {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link svg {
+    transition: none;
+  }
+}

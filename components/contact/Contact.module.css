@@ -1,0 +1,471 @@
+/* Talk to Nick — cream after the ivory FAQs: copy and the two direct options on the left, a short message form on
+   an ivory panel on the right. */
+
+.section {
+  --cream: #f4efe4;
+  --ivory: #faf8f2;
+  --green: #102922;
+  --ink: #15352b;
+  --muted: #5b6d63;
+  --gold-text: #846429;
+  --line: rgb(21 53 43 / 0.18);
+  --field-line: #7f8b84; /* 3:1 against white, so field edges are clear */
+  --error: #8a2c1d;
+  --gutter: clamp(20px, 6vw, 96px);
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+  --serif: var(--font-serif), Georgia, serif;
+
+  padding: 44px var(--gutter);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.section :where(a):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (min-width: 861px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(40px, 5vw, 88px);
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-block: 30px;
+  }
+}
+
+.direct {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 32rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 520;
+  font-variation-settings: "opsz" 40;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--green);
+}
+
+.body {
+  margin: 12px 0 0;
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.6;
+}
+
+.lesson {
+  margin: 8px 0 0;
+  font-size: 15.5px;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------ the two options: whole rows are links */
+.options {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 72px;
+  padding: 14px 20px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.option:hover {
+  border-color: var(--green);
+  background: rgb(255 255 255 / 0.4);
+}
+
+.icon {
+  flex: none;
+  fill: none;
+  stroke: var(--gold-text);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.optionText {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+}
+
+.optionLabel {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+.optionValue {
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 500;
+  color: var(--green);
+  overflow-wrap: break-word;
+}
+
+/* Phones: the whole row is still the link; dropping the arrow keeps the email address on one line. */
+@media (max-width: 520px) {
+  .option {
+    gap: 14px;
+    padding-inline: 16px;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+.arrow {
+  flex: none;
+  color: var(--green);
+  transition: transform 0.5s var(--ease);
+}
+
+.option:hover .arrow {
+  transform: translateX(4px);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ the message form */
+.form {
+  position: relative;
+  min-width: 0;
+  padding: 26px 28px 28px;
+  border-radius: 6px;
+  background: var(--ivory);
+}
+
+.formTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 520;
+  font-variation-settings: "opsz" 30;
+  line-height: 1.2;
+  color: var(--green);
+}
+
+.formIntro {
+  margin: 6px 0 0;
+  font-size: 15.5px;
+  color: var(--muted);
+}
+
+/* The height chosen on the rental section's slider (and its suggested size), above the fields: compact,
+   on white like the fields, with a "Change" link beside it. */
+.selection {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "list actions" "note note";
+  gap: 4px 16px;
+  margin-top: 16px;
+  padding: 11px 14px 12px;
+  border: 1px solid var(--line);
+  border-left: 3px solid #c29a55;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.selectionList {
+  grid-area: list;
+  display: grid;
+  gap: 2px;
+  margin: 0;
+}
+
+.selectionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+
+.selectionRow dt {
+  color: var(--muted);
+}
+
+.selectionRow dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+}
+
+.selectionNote {
+  grid-area: note;
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.selectionActions {
+  grid-area: actions;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0;
+}
+
+.selectionAction {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid rgb(194 154 85 / 0.7);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.selectionAction:hover {
+  border-color: var(--ink);
+}
+
+.selectionAction:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .selection {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "list" "note" "actions";
+  }
+
+  .selectionActions {
+    margin-top: 4px;
+  }
+}
+
+.fields {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+/* "(optional)" after a label */
+.optional {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--field-line);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px; /* 16px stops phones zooming in on focus */
+  line-height: 1.4;
+}
+
+.textarea {
+  min-height: 128px;
+  resize: vertical;
+}
+
+.input:focus-visible {
+  border-color: var(--green);
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--error);
+}
+
+.fieldError {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--error);
+}
+
+/* Present for bots only: off-screen and hidden from assistive technology. */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.formAlert {
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--error);
+  background: rgb(138 44 29 / 0.06);
+  font-size: 15px;
+}
+
+.formAlert p {
+  margin: 0;
+}
+
+.formAlert:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.alertLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: 6px !important;
+}
+
+.alertLinks a,
+.success a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgb(194 154 85 / 0.8);
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 20px;
+  padding: 19px 26px 19px 28px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--green);
+  color: var(--cream);
+  font: inherit;
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit:hover {
+  background: #1b3d33;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.submit svg {
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+
+.submit:hover svg {
+  transform: translateX(4px);
+}
+
+.success {
+  margin: 12px 0 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--green);
+}
+
+.success:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.replyTime {
+  margin: 12px 0 0;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+@media (max-width: 520px) {
+  .form {
+    padding: 22px 18px 22px;
+  }
+
+  .submit {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option,
+  .arrow,
+  .submit,
+  .submit svg {
+    transition: none;
+  }
+}

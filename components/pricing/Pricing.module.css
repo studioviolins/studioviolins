@@ -1,0 +1,274 @@
+/* Pricing — the site's deep green (#102922) across the full width, warm cream type, muted gold accents.
+   The prices sit straight on the green: no cards. Wide screens: one copy column (heading, prices, button)
+   beside the violin-and-bow image. Narrower screens: the copy, then the image. */
+
+.section {
+  --green: #102922;
+  --cream: #f4efe4;
+  --cream-soft: rgb(244 239 228 / 0.76);
+  --gold: #c29a55;
+  --gold-line: rgb(194 154 85 / 0.42);
+  --gutter: clamp(20px, 6vw, 96px);
+  --ease: cubic-bezier(0.25, 0.6, 0.2, 1);
+  --serif: var(--font-serif), Georgia, serif;
+  --stage-gap: clamp(44px, 5vw, 72px);
+
+  padding: 36px var(--gutter);
+  background: var(--green);
+  color: var(--cream);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.section :where(a):focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 4px;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Heading, prices, how to start and the button: one group, tightly spaced. */
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 520;
+  font-variation-settings: "opsz" 40;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------------------ the two payments
+   Side by side, each with a small gold dot by its label, joined by a thin gold line so they read as one
+   arrangement in order: the upfront payment, then the monthly one. Narrow phones stack them, joined vertically. */
+.stages {
+  display: flex;
+  gap: var(--stage-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stage {
+  position: relative;
+  padding-left: 17px;
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* from just after this payment to just before the next one's dot, level with the labels */
+.stage:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: calc(100% + 12px);
+  width: calc(var(--stage-gap) - 24px);
+  height: 1px;
+  background: var(--gold-line);
+}
+
+.label {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 12px;
+  margin: 4px 0 0;
+}
+
+.amount {
+  font-family: var(--serif);
+  font-size: clamp(44px, 4.2vw, 58px);
+  font-weight: 500;
+  font-variation-settings: "opsz" 48;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums;
+}
+
+.unit {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ the terms and the button */
+.details {
+  display: grid;
+  gap: 8px;
+  max-width: 34em;
+  font-size: 16px;
+}
+
+.detail {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--cream-soft);
+  text-wrap: pretty;
+}
+
+.cta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 28px;
+  padding: 19px 26px 19px 28px;
+  border-radius: 3px;
+  background: var(--cream);
+  color: var(--green);
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: #fffaf1;
+}
+
+.cta svg {
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+
+.cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ------------------------------------------------------------------ the image
+   The approved transparent violin and bow (2172 × 724, 3:1), always shown whole: scaled by width, height
+   automatic, never cropped, reshaped or recoloured. Its own alpha lets the section's green show through, so
+   there are no masks, fades or overlays. The violin and bow span 18–96% of its width and 2–93% of its height. */
+.photoImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Wide screens: right-aligned (reaching into the gutter) and vertically centred beside the copy. The
+   image's empty left margin may run under the copy column, but it's sized so the violin and bow (from 18%
+   of its width) always start at least 24px beyond the widest possible line of text: the terms' 34em line
+   (544px), or the column's own width less its padding when that's narrower. */
+@media (min-width: 1000px) {
+  .section {
+    container-type: inline-size;
+  }
+
+  .inner {
+    --copy-pad: clamp(32px, 4vw, 64px);
+    --inner-w: min(1240px, 100cqw);
+    --text-right: min(544px, 0.57 * var(--inner-w) - var(--copy-pad));
+    --photo-w: calc((var(--inner-w) + var(--gutter) - var(--text-right) - 24px) / 0.82);
+    position: relative;
+    grid-template-columns: minmax(0, 57fr) minmax(0, 43fr);
+    /* the image is out of flow, so never let the section be shorter than it */
+    min-height: calc(var(--photo-w) / 3 + 8px);
+    align-items: center;
+  }
+
+  .copy {
+    position: relative;
+    z-index: 1;
+    padding-right: var(--copy-pad);
+  }
+
+  .photo {
+    position: absolute;
+    top: 50%;
+    right: calc(-1 * var(--gutter));
+    width: var(--photo-w);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+/* Phones and tablets: the copy stays together, with the whole image beneath it. */
+@media (max-width: 999px) {
+  .photo {
+    margin-top: 24px;
+  }
+}
+
+/* Tablets: a capped width, so the image stays shallow. */
+@media (min-width: 721px) and (max-width: 999px) {
+  .photo {
+    width: min(100%, 640px);
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+
+  .details {
+    max-width: none;
+  }
+
+  /* the full width of the screen */
+  .photo {
+    margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .copy {
+    gap: 20px;
+  }
+}
+
+/* Narrow phones: the payments stacked, joined by a short vertical gold line. */
+@media (max-width: 560px) {
+  .stages {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .stage:not(:last-child)::after {
+    top: 18px;
+    bottom: -9px;
+    left: 3px;
+    width: 1px;
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .cta svg {
+    transition: none;
+  }
+}

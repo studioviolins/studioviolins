@@ -1,0 +1,116 @@
+/* The 404 page: the legal pages' cream reading page, cut down to a short message and three ways back. */
+
+.page {
+  --cream: #f4efe4;
+  --ink: #15352b;
+  --muted: #5b6d63;
+  --green: #102922;
+  --ivory: #f3ecdd;
+  --gold-text: #846429;
+  --gutter: clamp(20px, 6vw, 96px);
+  --serif: var(--font-serif), Georgia, serif;
+
+  min-height: 62svh;
+  padding: 72px var(--gutter) 88px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+.title {
+  max-width: 18ch;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.4vw, 44px);
+  font-weight: 520;
+  font-variation-settings: "opsz" 40;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.body {
+  max-width: 34em;
+  margin: 16px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px 14px 22px;
+  border-radius: 3px;
+  background: var(--green);
+  color: var(--ivory);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.primary svg {
+  flex: none;
+  transition: transform 0.5s cubic-bezier(0.25, 0.6, 0.2, 1);
+}
+
+.primary:hover svg {
+  transform: translateX(4px);
+}
+
+.link {
+  display: inline-block;
+  padding: 6px 0;
+  color: var(--ink);
+  font-size: 15px;
+  text-decoration: underline;
+  text-decoration-color: rgb(194 154 85 / 0.8);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.link:hover {
+  text-decoration-color: var(--ink);
+}
+
+.primary:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .page {
+    min-height: 0;
+    padding-block: 44px 56px;
+  }
+
+  .body {
+    font-size: 16px;
+  }
+}
