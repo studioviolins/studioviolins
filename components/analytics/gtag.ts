@@ -1,11 +1,19 @@
 "use client";
 
-import { getConsent } from "./consent";
+import { analyticsAllowed } from "./consent";
 import { ANALYTICS_ENABLED, GA_MEASUREMENT_ID } from "./config";
 
 /**
  * The only code that talks to Google Analytics. Every function does nothing unless analytics is configured AND
- * the visitor has accepted it.
+ * the visitor hasn't turned it off (./consent.ts: on by default, under the UK's statistical-purposes exception).
+ *
+ * That exception holds only while Google Analytics is used for aggregate statistics to improve this website, with
+ * no advertising, profiling or personal data. So, in this code:
+ *   - Google's consent mode says no to advertising from the start: ad_storage, ad_user_data and ad_personalization
+ *     are "denied"; only analytics_storage is "granted". Google signals and ad personalisation are off as well.
+ *   - Only the events below are sent, with fixed, non-personal values, and page addresses are cleaned first.
+ * And in the GA property (checked 23 Nov 2026; keep it that way, docs/seo-geo-aeo-handover-2026-11-22.md): no
+ * Google Ads or other advertising links, Google signals off, account data sharing off, ads personalisation off.
  *
  * Events (the agreed plan, docs/seo-geo-aeo-handover-2026-11-22.md):
  *   - page_view: once per page (sent by Analytics.tsx when the path changes; #section links don't count).
@@ -13,16 +21,16 @@ import { ANALYTICS_ENABLED, GA_MEASUREMENT_ID } from "./config";
  *     Not on clicking Send, and not on validation or delivery errors. It means an accepted enquiry, nothing more.
  *   - contact_click: a click on a WhatsApp or email link, with fixed channel and placement values.
  *   - size_guide_continue: once per page view, when the visitor continues from the height guide.
- * Only fixed, non-personal values are sent: never form contents, names, email addresses, phone numbers, the
- * player's height or size, message text, raw link URLs or error messages. Page addresses are sent without their
- * query string (except utm_ campaign tags) or #fragment.
+ * Never form contents, names, email addresses, phone numbers, the player's height or size, message text, raw link
+ * URLs or error messages. Page addresses are sent without their query string (except utm_ campaign tags) or
+ * #fragment.
  *
  * The GA4 property's own Google tag (G-DTHTWQM125, checked 23 Nov 2026 with Google's collection blocked) also
  * runs "enhanced measurement" (scrolls, form starts, outbound clicks, site search, history page views) and
  * ignores send_page_view in a later config call. So the settings below go in with gtag("set") BEFORE
  * gtag("js"), which stops its automatic page_view and makes its automatic events use the cleaned address. Its
- * site-search and form events read the browser's address directly, so once analytics is accepted the address
- * bar keeps only utm_ tags (and the #section) before the tag loads.
+ * site-search and form events read the browser's address directly, so while analytics runs the address bar keeps
+ * only utm_ tags (and the #section) before the tag loads.
  */
 type EventName = "page_view" | "generate_lead" | "contact_click" | "size_guide_continue";
 type EventParams = Record<string, string>;
@@ -65,7 +73,7 @@ function safeReferrer(): string {
 }
 
 /** Drops query values other than utm_ tags from the address bar, keeping the #section, so nothing the tag reads
- *  from the address itself (site search terms, form addresses) can carry them. Only used once analytics is accepted. */
+ *  from the address itself (site search terms, form addresses) can carry them. Only used while analytics runs. */
 function cleanAddressBar() {
   const { pathname, search, hash } = window.location;
   if (!search) return;
@@ -78,7 +86,7 @@ function cleanAddressBar() {
   }
 }
 
-/** Called once the visitor accepts: loads gtag.js. Google signals and ad personalisation stay off. */
+/** Called while analytics is on (the default): loads gtag.js once. Advertising stays off (see the note at the top). */
 export function enableAnalytics() {
   if (!ANALYTICS_ENABLED) return;
   setDisabled(false);
@@ -91,6 +99,13 @@ export function enableAnalytics() {
     // gtag.js expects the arguments object itself
     window.dataLayer!.push(arguments);
   };
+  // Consent mode: analytics only, never advertising. Must come before anything else is queued.
+  window.gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "granted",
+  });
   const settings = {
     send_page_view: false, // page_view is sent by Analytics.tsx, once per page
     page_location: safePageLocation(),
@@ -108,7 +123,8 @@ export function enableAnalytics() {
   document.head.appendChild(script);
 }
 
-/** Called when the visitor declines or withdraws: stops all sending and deletes the analytics cookies. */
+/** Called when the visitor turns analytics off (now or on an earlier visit): stops all sending and deletes the
+ *  analytics cookies. */
 export function disableAnalytics() {
   if (!ANALYTICS_ENABLED) return;
   setDisabled(true);
@@ -126,12 +142,12 @@ export function disableAnalytics() {
 }
 
 export function track(name: EventName, params: EventParams = {}) {
-  if (!ANALYTICS_ENABLED || !loaded || getConsent() !== "granted" || !window.gtag) return;
+  if (!ANALYTICS_ENABLED || !loaded || !analyticsAllowed() || !window.gtag) return;
   window.gtag("event", name, { ...params, page_location: safePageLocation() });
 }
 
 export function trackPageView() {
-  if (!ANALYTICS_ENABLED || !loaded || getConsent() !== "granted" || !window.gtag) return;
+  if (!ANALYTICS_ENABLED || !loaded || !analyticsAllowed() || !window.gtag) return;
   cleanAddressBar();
   window.gtag("set", { page_location: safePageLocation(), page_title: document.title });
   track("page_view", { page_title: document.title });
@@ -144,7 +160,7 @@ export function trackLead() {
 
 /** "Continue with this size": once per page view, and without the height or size. */
 export function trackSizeGuideContinue() {
-  if (sizeGuideSent || !loaded || getConsent() !== "granted") return;
+  if (sizeGuideSent || !loaded || !analyticsAllowed()) return;
   sizeGuideSent = true;
   track("size_guide_continue");
 }

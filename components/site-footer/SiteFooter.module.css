@@ -157,7 +157,7 @@
   border: 0;
 }
 
-/* "Cookie settings" (only when analytics is configured): a button that looks like the links beside it. */
+/* "Turn analytics off / on" (only when analytics is configured): a button that looks like the links beside it. */
 .linkButton {
   display: inline-block;
   padding: 2px 0;

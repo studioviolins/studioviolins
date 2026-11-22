@@ -1,68 +1,47 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useId } from "react";
 import { LINKS } from "@/components/hero/content";
-import { closeConsentSettings, setConsent, useConsentState } from "./consent";
+import { setConsent, useConsentState } from "./consent";
 import styles from "./ConsentBanner.module.css";
 
 export const ANALYTICS_COPY = {
   title: "Analytics cookies",
-  body: "May we use Google Analytics cookies to see how visitors use this website? Nothing is collected unless you accept.",
+  body: "We use Google Analytics cookies to count visits and see how this website is used, so we can improve it. It isn’t used for advertising or profiling, and you can turn it off at any time.",
   more: "Privacy Policy",
-  accept: "Accept analytics",
-  decline: "Decline",
-  on: "Analytics is on. You can turn it off at any time.",
-  off: "Analytics is off.",
+  ok: "OK",
+  turnOff: "Turn analytics off",
+  turnOn: "Turn analytics on",
+  on: "Analytics is on.",
+  off: "Analytics is off. You can turn it back on at the bottom of any page.",
 } as const;
 
 /**
- * A small panel in the bottom corner, shown until the visitor chooses and again from "Cookie settings" in the
- * footer. It doesn't block the page or take focus when it first appears; the form and everything else work
- * whatever the choice. Accept and Decline look the same, so declining is as easy as accepting. Reopened from
- * the footer it shows the current choice, takes focus, closes with Escape and hands focus back afterwards.
+ * The first-visit notice: a small panel in the bottom corner, shown until the visitor closes it with "OK" or turns
+ * analytics off. Analytics is already running while it shows (see ./consent.ts). It doesn't block the page or take
+ * focus; the form and everything else work whatever the choice. "OK" and "Turn analytics off" look the same, so
+ * turning it off is as easy as carrying on. Afterwards the footer's "Turn analytics off / on" button changes it.
  */
 export default function ConsentBanner() {
-  const { consent, settingsOpen, ready } = useConsentState();
+  const { consent, ready } = useConsentState();
   const id = useId();
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const opener = useRef<HTMLElement | null>(null);
-  const visible = ready && (consent === null || settingsOpen);
 
-  useEffect(() => {
-    if (!settingsOpen) return;
-    opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    titleRef.current?.focus();
-    return () => {
-      opener.current?.focus();
-      opener.current = null;
-    };
-  }, [settingsOpen]);
-
-  if (!visible) return null;
+  if (!ready || consent !== null) return null;
 
   return (
-    <section
-      className={styles.banner}
-      aria-labelledby={`${id}-title`}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") closeConsentSettings();
-      }}
-    >
-      <h2 id={`${id}-title`} ref={titleRef} className={styles.title} tabIndex={-1}>
+    <section className={styles.banner} aria-labelledby={`${id}-title`}>
+      <h2 id={`${id}-title`} className={styles.title}>
         {ANALYTICS_COPY.title}
       </h2>
       <p className={styles.body}>
         {ANALYTICS_COPY.body} <a href={`${LINKS.privacy}#privacy-analytics`}>{ANALYTICS_COPY.more}</a>
       </p>
-      {consent !== null ? (
-        <p className={styles.status}>{consent === "granted" ? ANALYTICS_COPY.on : ANALYTICS_COPY.off}</p>
-      ) : null}
       <div className={styles.actions}>
         <button type="button" className={styles.button} onClick={() => setConsent("granted")}>
-          {ANALYTICS_COPY.accept}
+          {ANALYTICS_COPY.ok}
         </button>
         <button type="button" className={styles.button} onClick={() => setConsent("denied")}>
-          {ANALYTICS_COPY.decline}
+          {ANALYTICS_COPY.turnOff}
         </button>
       </div>
     </section>

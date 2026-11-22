@@ -1,5 +1,5 @@
 import { ANALYTICS_ENABLED } from "@/components/analytics/config";
-import CookieSettingsButton from "@/components/analytics/CookieSettingsButton";
+import AnalyticsToggle from "@/components/analytics/AnalyticsToggle";
 import { GUIDES } from "@/components/guides/content";
 import { HERO_COPY, LINKS } from "@/components/hero/content";
 import { BUSINESS, EMAIL_HREF } from "@/components/site/business";
@@ -79,7 +79,7 @@ export default function SiteFooter() {
             </li>
             {ANALYTICS_ENABLED ? (
               <li>
-                <CookieSettingsButton className={styles.linkButton} />
+                <AnalyticsToggle className={styles.linkButton} />
               </li>
             ) : null}
           </ul>
