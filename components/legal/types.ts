@@ -3,6 +3,8 @@ export type LegalBlock = string | { list: string[] } | { link: { before: string;
 
 export type LegalSection = {
   heading: string;
+  /** An anchor for linking to the section (e.g. "privacy-analytics"); its heading keeps the numbered id. */
+  id?: string;
   /** Numbered clauses, e.g. ["6.4", "You must pay …"]. */
   clauses?: [string, string][];
   /** Plain paragraphs and bullet lists, in order. */

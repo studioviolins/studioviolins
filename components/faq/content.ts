@@ -1,12 +1,14 @@
 import { LINKS } from "@/components/hero/content";
+import { AREAS_TEXT } from "@/components/site/business";
 import { NEW_PRICES_LIVE, PRICE } from "@/components/pricing/content";
 
 /**
  * FAQs, adapted from the live site's FAQ answers and its rental Terms & Conditions (studioviolins.co.uk/terms,
  * "last updated 29 July 2026"), both read on 22 Nov 2026. The source for each answer is noted beside it.
  * Only what those sources state is said here; open points (violin models and playing levels, whether the
- * one-week preparation time still holds, sizes in stock, courier coverage and charges) are in
- * docs/nick-confirmation-checklist.md, not on the page.
+ * one-week preparation time still holds, sizes in stock) are in docs/nick-confirmation-checklist.md, not on the
+ * page. Areas served (Hertfordshire, Bedfordshire and Cambridge, from Hitchin) were confirmed by Oliver on
+ * 22 Nov 2026; delivery is charged and quoted on request, with no published price or timescale.
  * One deliberate change from the live site, per the brief: measuring is optional in the first enquiry. Answers whose
  * wording Oliver set are marked as such beside them.
  *
@@ -19,6 +21,8 @@ export type Faq = {
   a: string[];
   /** A link under the answer to the matching section of the rental terms (/terms). */
   terms?: { label: string; href: string };
+  /** A link under the answer to a guide page with more on the topic (/delivery, /starting-violin…). */
+  more?: { label: string; href: string };
   /** Kept off the page until Nick confirms the answer. */
   awaitingNick?: boolean;
 };
@@ -46,6 +50,7 @@ export const FAQS: Faq[] = [
     a: [
       "If a teacher has recommended a size, include it in your enquiry. Otherwise, use our height guide or contact us for advice. You don’t need a measurement to get in touch.",
     ],
+    more: { label: "More about choosing a size", href: "/starting-violin#choosing-a-size" },
   },
   {
     // Settled: new or carefully refurbished (next question); D'Addario Prelude strings, a high-quality bridge and
@@ -65,12 +70,15 @@ export const FAQS: Faq[] = [
     ],
   },
   {
-    // Terms 3.1, 3.2, 3.5, 6.5; live prices section "Free collection; delivery is charged for."
+    // Terms 3.1, 3.2, 3.5, 6.5; live prices section "Free collection; delivery is charged for." Areas served
+    // confirmed by Oliver, 22 Nov 2026 (components/site/business.ts).
     q: "Can I collect the violin, or can it be delivered?",
     a: [
+      `Either. Studio Violins is based in Hitchin and rents violins across ${AREAS_TEXT}.`,
       "Collection in Hitchin is free, by appointment. If you can’t collect, the violin can be sent by courier; delivery is charged, and paid with your first payment before it’s sent.",
       "If anything looks damaged or missing when it arrives, let us know within seven days.",
     ],
+    more: { label: "Collection and delivery", href: "/delivery" },
   },
   {
     // Terms 6.4, 6.6. Until 1 January 2027 the upfront payment also covers the one-off subscription fee; from then

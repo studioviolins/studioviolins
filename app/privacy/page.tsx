@@ -5,7 +5,7 @@ import { PRIVACY } from "@/components/legal/privacy-content";
 
 export const metadata: Metadata = pageMetadata({
   path: "/privacy",
-  title: "Privacy Policy — Studio Violins",
+  title: "Privacy Policy | Studio Violins",
   description: "How Studio Violins looks after your personal information.",
 });
 

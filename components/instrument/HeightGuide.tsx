@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { trackSizeGuideContinue } from "@/components/analytics/gtag";
 import { LineArrowIcon } from "@/components/hero/icons";
 import { HEIGHT_RANGES_PROBLEM, HEIGHT_SIZES, SIZES_AVAILABLE, heightText, suggestedSizeFor } from "./height-sizes";
 import {
@@ -100,7 +101,12 @@ export default function HeightGuide() {
       {/* Once a height is chosen, straight to the form on this page, where it's shown above the fields. A bare
           "#…" link stays on this page even when its address has a query (from a campaign link, say); "/#…" would
           reload it and lose the height. */}
-      <a href={selected !== null ? `#${CONTACT_FORM_ID}` : INSTRUMENT_LINKS.contact} className={styles.cta}>
+      {/* Analytics (only if configured and accepted): one size_guide_continue per page, without the height or size. */}
+      <a
+        href={selected !== null ? `#${CONTACT_FORM_ID}` : INSTRUMENT_LINKS.contact}
+        className={styles.cta}
+        onClick={selected !== null ? trackSizeGuideContinue : undefined}
+      >
         {COPY.cta}
         <LineArrowIcon />
       </a>

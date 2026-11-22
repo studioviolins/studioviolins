@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
-import { pageMetadata } from "@/components/seo/metadata";
+import Analytics from "@/components/analytics/Analytics";
+import { HOME_SEO, pageMetadata } from "@/components/seo/metadata";
 import { SITE_URL } from "@/components/site/business";
 import "./globals.css";
 
@@ -19,15 +20,10 @@ const sans = DM_Sans({
   display: "swap",
 });
 
-// The home page's details; the terms, privacy and not-found pages set their own.
+// The home page's details; every other page sets its own. The visible hero heading is unchanged.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  ...pageMetadata({
-    path: "/",
-    title: "Studio Violins — Rent your violin from a professional violinist",
-    description:
-      "Violin rental in Hitchin with the personal guidance of Nick Evans-Pughe, professional violinist, teacher and Associate of the Royal Academy of Music.",
-  }),
+  ...pageMetadata({ path: "/", ...HOME_SEO }),
 };
 
 export const viewport: Viewport = {
@@ -37,7 +33,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GB" className={`${serif.variable} ${sans.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Renders nothing unless NEXT_PUBLIC_GA_MEASUREMENT_ID is set (components/analytics/config.ts). */}
+        <Analytics />
+      </body>
     </html>
   );
 }

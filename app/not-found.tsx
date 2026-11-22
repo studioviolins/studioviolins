@@ -7,7 +7,7 @@ import SiteHeader from "@/components/site-header/SiteHeader";
 
 // Next.js adds noindex to 404s itself; the home page's canonical and sharing details mustn't carry over.
 export const metadata: Metadata = {
-  title: "Page not found — Studio Violins",
+  title: "Page not found | Studio Violins",
   description: "This page isn’t on the Studio Violins site.",
   alternates: { canonical: null },
   openGraph: null,

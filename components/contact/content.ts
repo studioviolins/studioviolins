@@ -2,8 +2,9 @@
  * Talk to Nick: WhatsApp, email, or a short message form. The only measurement is the player's height, and only
  * when the visitor has chosen it on the rental section's slider; everything else Nick collects in conversation.
  *
- * Not shown until Nick confirms them (docs/nick-confirmation-checklist.md): courier coverage and charges (free
- * collection from Hitchin and customer-paid delivery are settled), and whether the timings on record still hold:
+ * Areas served are settled (Hertfordshire, Bedfordshire and Cambridge, from Hitchin; Oliver, 22 Nov 2026), as are
+ * free collection in Hitchin and customer-paid courier delivery, quoted on request (see /delivery). Not shown until
+ * Nick confirms them (docs/nick-confirmation-checklist.md): whether the timings on record still hold:
  * the existing site's "allow up to five working days" for a reply, and generally one week to prepare a violin.
  * Reply time is about answering messages only, never about instrument availability or delivery.
  */

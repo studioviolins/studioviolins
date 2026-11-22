@@ -31,5 +31,8 @@ docs/*
 output/
 tmp/
 
+# Design working files (share-image layouts and masters); the finished images are in public/images/.
+design/
+
 # 3D model generator: it reads reference data kept in output/. The finished model is in public/violin-3d/.
 blender/

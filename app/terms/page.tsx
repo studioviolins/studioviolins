@@ -5,7 +5,7 @@ import { TERMS } from "@/components/legal/terms-content";
 
 export const metadata: Metadata = pageMetadata({
   path: "/terms",
-  title: "Terms & Conditions — Studio Violins",
+  title: "Terms & Conditions | Studio Violins",
   description: "Terms for hiring an instrument from Studio Violins.",
 });
 

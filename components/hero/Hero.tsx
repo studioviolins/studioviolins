@@ -337,6 +337,7 @@ export default function Hero() {
                 fill
                 sizes="(max-width: 720px) 100vw, 80vw"
                 preload
+                fetchPriority="high" /* the page's largest image: load it first (no visual change) */
                 placeholder="blur"
                 className={styles.photo}
               />

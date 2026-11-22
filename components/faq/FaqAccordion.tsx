@@ -48,6 +48,11 @@ export default function FaqAccordion({ faqs }: { faqs: Faq[] }) {
               {f.a.map((p) => (
                 <p key={p.slice(0, 32)}>{p}</p>
               ))}
+              {f.more ? (
+                <p className={styles.termsLink}>
+                  <a href={f.more.href}>{f.more.label}</a>
+                </p>
+              ) : null}
               {f.terms ? (
                 <p className={styles.termsLink}>
                   <a href={f.terms.href}>{f.terms.label}</a>

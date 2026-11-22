@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { trackLead } from "@/components/analytics/gtag";
 import { LineArrowIcon } from "@/components/hero/icons";
 import { BUSINESS, EMAIL_HREF } from "@/components/site/business";
 import { HEIGHT_FIELD, sizingFor } from "@/components/instrument/height-sizes";
@@ -48,6 +49,7 @@ export default function ContactForm() {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLParagraphElement>(null);
+  const trackedAttempt = useRef(0);
   // When the form appeared (set in the browser), for the minimum-time spam check.
   const [startedAt, setStartedAt] = useState("");
   const selectedHeight = useSelectedHeight();
@@ -68,6 +70,11 @@ export default function ContactForm() {
     } else if (state.status === "sent") {
       successRef.current?.focus();
       setSelectedHeight(null); // sent with that message; a new one starts without it
+      // Analytics (only if configured and accepted): one generate_lead per accepted message, with no form details.
+      if (trackedAttempt.current !== state.attempt) {
+        trackedAttempt.current = state.attempt;
+        trackLead();
+      }
     }
   }, [state]);
 

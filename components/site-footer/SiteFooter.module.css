@@ -156,3 +156,26 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* "Cookie settings" (only when analytics is configured): a button that looks like the links beside it. */
+.linkButton {
+  display: inline-block;
+  padding: 2px 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--cream);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.linkButton:hover {
+  border-color: rgb(194 154 85 / 0.7);
+}
+
+.linkButton:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}

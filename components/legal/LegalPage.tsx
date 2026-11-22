@@ -27,7 +27,7 @@ export default function LegalPage({ doc, slug }: { doc: LegalDoc; slug: string }
             {doc.sections.map((section, index) => {
               const id = `${slug}-${index + 1}`;
               return (
-                <section key={section.heading} className={styles.section} aria-labelledby={id}>
+                <section key={section.heading} id={section.id} className={styles.section} aria-labelledby={id}>
                   <h2 id={id} className={styles.heading}>
                     <span className={styles.headingNumber}>{index + 1}.</span> {section.heading}
                   </h2>

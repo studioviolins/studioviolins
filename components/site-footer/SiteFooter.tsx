@@ -1,3 +1,6 @@
+import { ANALYTICS_ENABLED } from "@/components/analytics/config";
+import CookieSettingsButton from "@/components/analytics/CookieSettingsButton";
+import { GUIDES } from "@/components/guides/content";
 import { HERO_COPY, LINKS } from "@/components/hero/content";
 import { BUSINESS, EMAIL_HREF } from "@/components/site/business";
 import styles from "./SiteFooter.module.css";
@@ -57,6 +60,11 @@ export default function SiteFooter() {
         <div className={styles.col}>
           <h2 className={styles.colTitle}>More</h2>
           <ul>
+            {GUIDES.map((g) => (
+              <li key={g.path}>
+                <a href={g.path}>{g.linkLabel}</a>
+              </li>
+            ))}
             <li>
               <a href={BUSINESS.instagram} {...NEW_TAB}>
                 Instagram
@@ -69,6 +77,11 @@ export default function SiteFooter() {
             <li>
               <a href={LINKS.privacy}>Privacy Policy</a>
             </li>
+            {ANALYTICS_ENABLED ? (
+              <li>
+                <CookieSettingsButton className={styles.linkButton} />
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>

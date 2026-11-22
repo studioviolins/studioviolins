@@ -1,5 +1,6 @@
+import { ANALYTICS_ENABLED } from "@/components/analytics/config";
 import { BUSINESS } from "@/components/site/business";
-import type { LegalDoc } from "./types";
+import type { LegalDoc, LegalSection } from "./types";
 
 /**
  * Privacy policy for the new site, revised 22 Nov 2026 from the live policy (studioviolins.co.uk/privacy,
@@ -10,10 +11,27 @@ import type { LegalDoc } from "./types";
  *     chosen a height on the rental section's slider), emailed to Nick and not stored by the site; a short-lived,
  *     in-memory count per IP address limits spam (components/contact/actions.ts);
  *   - enquiries also arrive by WhatsApp or email, and rentals are paid by direct debit.
- * If the form changes, or analytics or any embed is ever added, update "Our website" first.
+ *
+ * Analytics: the wording follows components/analytics/config.ts. While NEXT_PUBLIC_GA_MEASUREMENT_ID is unset (as
+ * now), the page says the site uses no cookies or analytics, which is true. Once it is set and the site rebuilt,
+ * "Our website" changes, an "Analytics and cookies" section appears (anchor #privacy-analytics, linked from the
+ * consent banner), and Google is added to the sharing, lawful basis and transfers text. Change "updated" to the
+ * date analytics goes live when that happens (docs/seo-geo-aeo-handover-2026-11-22.md).
+ * If the form changes, or any embed is ever added, update "Our website" first.
  * Open points (hosting provider, payment provider, retention periods, ICO registration, the date) are in
  * docs/nick-confirmation-checklist.md. Not legal advice; Nick may want it checked before launch.
  */
+/** Shown only when analytics is configured (see the note above). */
+const ANALYTICS_SECTION: LegalSection = {
+  heading: "Analytics and cookies",
+  id: "privacy-analytics",
+  blocks: [
+    "With your agreement, we use Google Analytics to understand how this website is used, such as which pages are visited and how many enquiries are sent, so we can improve it. Nothing is collected and no analytics cookies are set unless you choose “Accept analytics”.",
+    "If you accept, Google Analytics sets cookies (named _ga and _ga_ followed by a code) and records the pages you visit, the website that referred you, your browser and device type, and your approximate location, which Google works out from your IP address. It also records when the contact form sends a message, when a WhatsApp or email link is used, and when you continue from the size guide to the form. We don’t send Google your name, contact details, the player’s height or size, or anything you type into the form. Google signals and advertising features are turned off.",
+    "Your choice is remembered in your browser’s storage, not in a cookie, so you aren’t asked on every page. You can change it at any time with “Cookie settings” at the bottom of each page. If you decline or withdraw, the analytics cookies are deleted and nothing further is sent.",
+  ],
+};
+
 export const PRIVACY: LegalDoc = {
   title: "Privacy Policy",
   intro: "How Studio Violins looks after your personal information.",
@@ -44,12 +62,15 @@ export const PRIVACY: LegalDoc = {
     {
       heading: "Our website",
       blocks: [
-        "This website has no accounts, and it doesn’t use cookies, analytics or advertising trackers.",
+        ANALYTICS_ENABLED
+          ? "This website has no accounts and no advertising trackers. It uses Google Analytics only if you accept it, as explained in the next section."
+          : "This website has no accounts, and it doesn’t use cookies, analytics or advertising trackers.",
         "If you use the contact form, your name, email address, message and phone number (if you give one) are sent to us by email so we can reply; the website itself doesn’t keep them. If you choose a height on the size slider, the form shows it above the fields and sends it with your message, together with the suggested size when there is one. To help prevent spam, the website briefly keeps a count of recent messages from each IP address in memory, which is cleared within minutes. The WhatsApp and email links simply open WhatsApp or your own email app.",
         "Like any website, it is delivered by a hosting provider, which automatically records technical information when pages are requested, such as your IP address, browser type and the date and time of the request. This is used to deliver the site and keep it secure.",
         "Links to WhatsApp, Instagram, Google Maps and Google reviews take you to those services, and their own privacy policies apply there.",
       ],
     },
+    ...(ANALYTICS_ENABLED ? [ANALYTICS_SECTION] : []),
     {
       heading: "How we use your information",
       blocks: [
@@ -73,6 +94,9 @@ export const PRIVACY: LegalDoc = {
             "Contract: to provide your rental, and to take the steps you ask for before it begins.",
             "Legitimate interests: to answer enquiries, look after our instruments and keep our website secure, in ways you would reasonably expect.",
             "Legal obligation: to keep the financial records the law requires.",
+            ...(ANALYTICS_ENABLED
+              ? ["Consent: for Google Analytics, only if you choose “Accept analytics”. You can withdraw it at any time with “Cookie settings”."]
+              : []),
             "Consent: if we ever ask to send you news or offers, we’ll do so only with your agreement, and you can withdraw it at any time.",
           ],
         },
@@ -86,7 +110,10 @@ export const PRIVACY: LegalDoc = {
           list: [
             "our direct debit provider, to set up and collect payments;",
             "courier companies, when an instrument is delivered or returned by courier;",
-            "the providers of our email, messaging and website hosting.",
+            ANALYTICS_ENABLED
+              ? "the providers of our email, messaging and website hosting;"
+              : "the providers of our email, messaging and website hosting.",
+            ...(ANALYTICS_ENABLED ? ["Google, which provides Google Analytics, if you accept analytics cookies."] : []),
           ],
         },
         "We may also share information where the law requires it.",
@@ -95,7 +122,7 @@ export const PRIVACY: LegalDoc = {
     {
       heading: "International transfers",
       blocks: [
-        "Some of these providers, such as email and messaging services, may store information outside the UK. Where they do, we rely on the safeguards UK law provides, such as adequacy regulations or standard contractual clauses.",
+        `Some of these providers, such as email and messaging services${ANALYTICS_ENABLED ? " and Google Analytics" : ""}, may store information outside the UK. Where they do, we rely on the safeguards UK law provides, such as adequacy regulations or standard contractual clauses.`,
       ],
     },
     {

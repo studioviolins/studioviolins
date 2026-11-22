@@ -21,9 +21,25 @@ export const BUSINESS = {
 };
 
 /**
+ * Where Studio Violins rents violins: confirmed by Oliver on 22 Nov 2026 for collection and courier delivery.
+ * Hitchin is the only base (visits by appointment); these are areas served, not branches. "Cambridge" means the
+ * city, not the wider county of Cambridgeshire. The structured data, the delivery page and the FAQ read this list,
+ * so a future area is added here, once, when it's confirmed. Never list a planned area before then.
+ */
+export const BASE_TOWN = "Hitchin";
+
+export const AREAS_SERVED = [
+  { name: "Hertfordshire", type: "AdministrativeArea", sameAs: "https://en.wikipedia.org/wiki/Hertfordshire" },
+  { name: "Bedfordshire", type: "AdministrativeArea", sameAs: "https://en.wikipedia.org/wiki/Bedfordshire" },
+  { name: "Cambridge", type: "City", sameAs: "https://en.wikipedia.org/wiki/Cambridge" },
+] as const;
+
+/** "Hertfordshire, Bedfordshire and Cambridge", for running text. */
+export const AREAS_TEXT = `${AREAS_SERVED.slice(0, -1).map((a) => a.name).join(", ")} and ${AREAS_SERVED[AREAS_SERVED.length - 1].name}`;
+
+/**
  * The site's public address, used for canonical links, sharing previews, structured data and the sitemap.
- * www is the current form: today studioviolins.co.uk (no www) redirects to www.studioviolins.co.uk.
- * Nick to confirm the new host keeps www (docs/launch-notes.md).
+ * www is the preferred form: studioviolins.co.uk (no www) redirects to www.studioviolins.co.uk (308, on Vercel).
  */
 export const SITE_URL = "https://www.studioviolins.co.uk";
 

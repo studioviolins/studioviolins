@@ -50,7 +50,7 @@ npm start
 
 ## Environment variables
 
-Only the contact form needs configuration. Copy `.env.example` to `.env.local` for local use. On the host (for example, Vercel → Project Settings → Environment Variables), set the same names there. Never commit real values.
+Only the contact form needs configuration; analytics is optional and off by default. Copy `.env.example` to `.env.local` for local use. On the host (for example, Vercel → Project Settings → Environment Variables), set the same names there. Never commit real values.
 
 | Variable | Required | Purpose |
 |---|---|---|
@@ -61,6 +61,7 @@ Only the contact form needs configuration. Copy `.env.example` to `.env.local` f
 | `CONTACT_TO` | No | Where enquiries are delivered. Defaults to the business address |
 | `CONTACT_FROM` | No | Sender address. Defaults to the business address, and must be one the SMTP account may send from |
 | `CONTACT_DEV_OUTBOX` | No | Development only: `1` writes messages to `output/dev-outbox/*.eml` instead of sending them |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 Measurement ID (`G-…`). Empty means no analytics, no cookie banner and no analytics wording in the privacy policy. When set, visitors are asked first and Google Analytics loads only after they accept. Read at build time, so redeploy after changing it |
 
 Without the required values the site still builds and runs. The form then shows a "couldn't be sent" message with the WhatsApp and email alternatives.
 
