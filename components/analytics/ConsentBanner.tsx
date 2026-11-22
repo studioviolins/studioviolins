@@ -8,7 +8,7 @@ import styles from "./ConsentBanner.module.css";
 export const ANALYTICS_COPY = {
   title: "Analytics cookies",
   body: "We use Google Analytics cookies to count visits and see how this website is used, so we can improve it. It isn’t used for advertising or profiling, and you can turn it off at any time.",
-  more: "Privacy Policy",
+  more: "Analytics details",
   ok: "OK",
   turnOff: "Turn analytics off",
   turnOn: "Turn analytics on",

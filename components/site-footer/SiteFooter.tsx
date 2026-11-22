@@ -89,10 +89,10 @@ export default function SiteFooter() {
       <div className={styles.bottom}>
         <p>© {new Date().getFullYear()} {BUSINESS.name}. All rights reserved.</p>
         <nav aria-label="Footer" className={styles.pageNav}>
-          <a href={LINKS.pricing}>Pricing</a>
-          <a href={LINKS.meetNick}>Meet Nick</a>
-          <a href={LINKS.faqs}>FAQs</a>
-          <a href={LINKS.contact}>Contact</a>
+          <a href={LINKS.pricing}>Rental pricing</a>
+          <a href={LINKS.meetNick}>About Nick</a>
+          <a href={LINKS.faqs}>Rental FAQs</a>
+          <a href={LINKS.contact}>Start an enquiry</a>
         </nav>
       </div>
     </footer>

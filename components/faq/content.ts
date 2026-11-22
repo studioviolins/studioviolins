@@ -36,7 +36,7 @@ const termsSection = (n: number) => ({
 export const FAQ_COPY = {
   title: "Frequently asked questions.",
   intro: "If your question isn’t here, get in touch.",
-  contactLabel: "Talk to Nick",
+  contactLabel: "Ask Nick a question",
   contactHref: LINKS.contact,
   termsLabel: "Full rental terms",
   termsHref: LINKS.terms,

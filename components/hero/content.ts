@@ -2,8 +2,7 @@ import nickPlaying from "@/assets/nick-playing-4k.png";
 
 /**
  * Every link on the site that stays on the site. Section links start with "/" so they also work from the terms
- * and privacy pages. Every "Talk to Nick" / "Start your rental" / "Find your size" button uses `contact`, so
- * changing it here changes them all.
+ * and privacy pages. The hero, rental and sizing calls to action use `contact` as their destination.
  */
 export const LINKS = {
   home: "/",

@@ -41,7 +41,7 @@ export default function NotFound() {
             </li>
             <li>
               <a href={LINKS.contact} className={styles.link}>
-                Talk to Nick
+                Send a rental enquiry
               </a>
             </li>
           </ul>

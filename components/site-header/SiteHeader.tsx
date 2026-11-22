@@ -5,13 +5,13 @@ import { LINKS } from "@/components/hero/content";
 import { LineArrowIcon } from "@/components/hero/icons";
 import styles from "./SiteHeader.module.css";
 
-/** In page order. The last one is the "Talk to Nick" button. */
+/** In page order. The last one is the contact button. */
 const SECTIONS = [
   { id: "prices", label: "Pricing", href: LINKS.pricing },
   { id: "about", label: "Meet Nick", href: LINKS.meetNick },
   { id: "faqs", label: "FAQs", href: LINKS.faqs },
 ];
-const CTA = { id: "contact", label: "Talk to Nick", href: LINKS.contact };
+const CTA = { id: "contact", label: "Contact Nick", href: LINKS.contact };
 const ALL = [...SECTIONS, CTA];
 
 /** The compact bar's height plus a little air (kept in step with `scroll-padding-top` in globals.css). */
