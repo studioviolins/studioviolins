@@ -5,7 +5,7 @@ import { LINKS } from "@/components/hero/content";
  * three rental benefits underneath. The pricing and contact links also sit in the hero navigation.
  */
 export const INSTRUMENT_COPY = {
-  eyebrow: "Renting with Nick",
+  eyebrow: "Your rental violin",
   introTitle: "Enhanced tone. Optimised playability.",
   // Wording set by Oliver (22 Nov 2026). Whether a violin is new or refurbished is answered in the FAQ
   // ("Will my violin be new?"), not here.

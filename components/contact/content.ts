@@ -10,11 +10,10 @@
 export const CONTACT_COPY = {
   title: "Talk to Nick.",
   /** What happens next, in general terms only: no times, coverage or charges. */
-  body: "Tell Nick a little about the player. He’ll talk through what they need, help you choose the right instrument and size, then arrange collection or delivery.",
-  lesson: "Need it for an upcoming lesson? Ask Nick about availability.",
+  body: "Tell us about the player. We’ll help you choose the right instrument and size, then arrange collection or delivery.",
+  lesson: "If you need an instrument for an upcoming lesson, mention the date in your enquiry.",
   form: {
-    title: "Ask Nick a question",
-    intro: "Whether you’re choosing your first violin or looking for your next size, Nick can help.",
+    title: "Send a message",
     nameLabel: "Your name",
     emailLabel: "Email address",
     phoneLabel: "Phone number",
@@ -38,7 +37,7 @@ export const CONTACT_COPY = {
       /** Read by screen readers after "Remove"; not shown. */
       removeHint: " the player’s height and size from your message",
     },
-    submit: "Send message to Nick",
+    submit: "Send a message",
     sending: "Sending…",
     success: "Thanks—your message has been sent to Nick.",
     failure: "Sorry, your message couldn’t be sent. It’s still here, so you can try again, or reach Nick directly:",

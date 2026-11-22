@@ -4,7 +4,7 @@ import { INSTRUMENT_COPY as COPY, RENTAL_BENEFITS } from "./content";
 import styles from "./InstrumentExplorer.module.css";
 
 /**
- * Renting with Nick, as one section. Wide screens: the upgrade statement and the height slider on the left,
+ * Your rental violin, as one section. Wide screens: the upgrade statement and the height slider on the left,
  * the rotatable violin on the right, three rental benefits across the bottom. Phones read in order:
  * statement, violin, slider, benefits. The slider never changes the violin.
  */

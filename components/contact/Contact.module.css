@@ -198,12 +198,6 @@
   color: var(--green);
 }
 
-.formIntro {
-  margin: 6px 0 0;
-  font-size: 15.5px;
-  color: var(--muted);
-}
-
 /* The height chosen on the rental section's slider (and its suggested size), above the fields: compact,
    on white like the fields, with a "Change" link beside it. */
 .selection {

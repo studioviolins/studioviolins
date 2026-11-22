@@ -12,7 +12,7 @@ export const MEET_NICK = {
   title: "Meet Nick.",
   body: [
     `${NICK.name} is a professional violinist, teacher and Associate of the Royal Academy of Music, with over 30 years’ experience in the violin business. He built his knowledge of violin-family instruments in instrument retail and, more recently, in the charity sector, managing the loan of high-end instruments to advanced students.`,
-    "With every rental, that experience means personal guidance from Nick in choosing the right instrument and size, and careful preparation so your violin is ready to play.",
+    "With every rental, that experience means personal guidance in choosing the right instrument and size, and careful preparation so your violin is ready to play.",
   ],
   cta: "Talk to Nick",
   href: LINKS.contact,

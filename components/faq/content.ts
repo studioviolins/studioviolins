@@ -31,7 +31,7 @@ const termsSection = (n: number) => ({
 
 export const FAQ_COPY = {
   title: "Frequently asked questions.",
-  intro: "If your question isn’t here, just ask Nick.",
+  intro: "If your question isn’t here, get in touch.",
   contactLabel: "Talk to Nick",
   contactHref: LINKS.contact,
   termsLabel: "Full rental terms",
@@ -40,11 +40,11 @@ export const FAQ_COPY = {
 
 export const FAQS: Faq[] = [
   {
-    // Live FAQ "What size violin will I need?" (teacher's size first); measuring optional per the brief.
+    // Wording set by Oliver (22 Nov 2026), shortened from the live FAQ "What size violin will I need?" (teacher's
+    // size first); measuring stays optional per the brief.
     q: "What size violin do I need?",
     a: [
-      "If your child’s teacher has recommended a size, just tell Nick. If not, Nick will help you find the right one. A height measurement is useful, but you don’t need one to get in touch.",
-      "Adults and existing players can contact Nick directly.",
+      "If a teacher has recommended a size, include it in your enquiry. Otherwise, use our height guide or contact us for advice. You don’t need a measurement to get in touch.",
     ],
   },
   {
@@ -68,8 +68,8 @@ export const FAQS: Faq[] = [
     // Terms 3.1, 3.2, 3.5, 6.5; live prices section "Free collection; delivery is charged for."
     q: "Can I collect the violin, or can it be delivered?",
     a: [
-      "Collection from Nick in Hitchin is free, by appointment. If you can’t collect, the violin can be sent by courier; delivery is charged, and paid with your first payment before it’s sent.",
-      "If anything looks damaged or missing when it arrives, let Nick know within seven days.",
+      "Collection in Hitchin is free, by appointment. If you can’t collect, the violin can be sent by courier; delivery is charged, and paid with your first payment before it’s sent.",
+      "If anything looks damaged or missing when it arrives, let us know within seven days.",
     ],
   },
   {
@@ -85,7 +85,7 @@ export const FAQS: Faq[] = [
     // subscription or joining fee for new rentals any more (22 Nov 2026), so support is "included in your rental".
     q: "What does ongoing support include?",
     a: [
-      "Advice from Nick throughout your rental: on sizing, care and set-up, and on what to do if something doesn’t seem right. It’s included in your rental.",
+      "Advice throughout your rental: on sizing, care and set-up, and on what to do if something doesn’t seem right. It’s included in your rental.",
       "Support is advice and help; it isn’t insurance. Responsibility for damage and maintenance is explained below.",
     ],
   },
@@ -122,15 +122,15 @@ export const FAQS: Faq[] = [
     // Live "Free upsizing … subject to availability"; live FAQ asks for notice; live "Free collection; delivery is charged for."
     q: "How do size exchanges work?",
     a: [
-      "As your child grows, they can move up to the next size free of charge, subject to availability. Give Nick as much notice as you can. Collection is free; if you need the new size delivered, ask Nick about courier costs.",
+      "As your child grows, they can move up to the next size free of charge, subject to availability. Give us as much notice as you can. Collection is free; if you need the new size delivered, ask us about courier costs.",
     ],
   },
   {
     // Terms 6.7, 10.1–10.4, 10.6; live FAQ "How do I return my rental violin?"
     q: "How do I return the violin, and when do payments stop?",
     a: [
-      `You can return it any time after the first ${PRICE.minimumTerm}. Let Nick know and he’ll arrange a time. Returns are in person, by appointment; a courier can be used only by prior agreement, at your cost.`,
-      `Your direct debit runs until the end of the month in which the complete outfit is returned, and Nick then cancels it. A violin returned within the first ${PRICE.minimumTerm} can’t be refunded.`,
+      `You can return it any time after the first ${PRICE.minimumTerm}. Contact us to arrange a time. Returns are in person, by appointment; a courier can be used only by prior agreement, at your cost.`,
+      `Your direct debit runs until the end of the month in which the complete outfit is returned, and we then cancel it. A violin returned within the first ${PRICE.minimumTerm} can’t be refunded.`,
     ],
     terms: termsSection(10),
   },

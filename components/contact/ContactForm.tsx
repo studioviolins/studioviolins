@@ -21,7 +21,7 @@ const PICK = COPY.selection;
 const FIELD_ORDER: ContactField[] = ["name", "email", "phone", "message"];
 
 /**
- * "Ask Nick a question": name, email, an optional phone number and message, sent by a server action. Labels are always visible; errors
+ * "Send a message": name, email, an optional phone number and message, sent by a server action. Labels are always visible; errors
  * come back from the server, sit under their field (aria-invalid + aria-describedby) and the first one takes focus.
  * What the visitor typed is returned with every response and used as each field's default, so it survives the
  * re-render after a failed attempt. Success is only shown when the server says the email went.
@@ -95,7 +95,6 @@ export default function ContactForm() {
       <h3 id={ids.title} className={styles.formTitle}>
         {COPY.title}
       </h3>
-      <p className={styles.formIntro}>{COPY.intro}</p>
 
       {sizing ? (
         <div className={styles.selection} role="group" aria-label={PICK.label}>
